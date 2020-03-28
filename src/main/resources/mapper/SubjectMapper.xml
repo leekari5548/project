@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lw.dao.SubjectMapper">
+    <resultMap id="BaseResultMap" type="com.lw.entity.Subject">
+        <id column="id" jdbcType="VARCHAR" property="id" />
+        <result column="subject" jdbcType="VARCHAR" property="subject" />
+        <result column="createTime" jdbcType="VARCHAR" property="createTime" />
+    </resultMap>
+
+    <!--    <sql id="Base_Column_List">-->
+    <!--        id,`username`,`nickname`,title,content,subject,status,groupId,groupName,createTime-->
+    <!--    </sql>-->
+
+<!--    <insert id="insertSubject" parameterType="com.lw.entity.Subject">-->
+<!--        insert into review(id,subject,createTime)-->
+<!--        values(#{id,jdbcType=VARCHAR},#{subject,jdbcType=VARCHAR},#{createTime,jdbcType=VARCHAR})-->
+<!--    </insert>-->
+
+    <select id="get" resultType="com.lw.entity.Subject">
+        select * from subject where 1=1
+        <if test="id != null and id != ''">
+            and id = #{id,jdbcType=VARCHAR}
+        </if>
+    </select>
+
+
+
+</mapper>

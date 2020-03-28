@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lw.dao.GroupMapper">
+    <resultMap id="BaseResultMap" type="com.lw.entity.Group">
+        <id column="id" jdbcType="VARCHAR" property="id" />
+        <result column="name" jdbcType="VARCHAR" property="name" />
+        <result column="status" jdbcType="VARCHAR" property="status" />
+        <result column="logo" jdbcType="VARCHAR" property="logo" />
+        <result column="description" jdbcType="VARCHAR" property="description" />
+        <result column="creator" jdbcType="VARCHAR" property="creator" />
+        <result column="createTime" jdbcType="VARCHAR" property="createTime" />
+        <result column="contact" jdbcType="VARCHAR" property="contact" />
+    </resultMap>
+
+    <!--    <sql id="Base_Column_List">-->
+    <!--        id,`username`,`nickname`,title,content,subject,status,groupId,groupName,createTime-->
+    <!--    </sql>-->
+
+    <insert id="insertGroup" parameterType="com.lw.entity.Group">
+        insert into `group`(id,`name`,status,logo,description,creator,createTime,contact)
+        values(#{id,jdbcType=VARCHAR},#{name,jdbcType=VARCHAR},#{status,jdbcType=VARCHAR},
+        #{logo,jdbcType=VARCHAR},#{description,jdbcType=VARCHAR},#{creator,jdbcType=VARCHAR},
+        #{createTime,jdbcType=VARCHAR},#{contact,jdbcType=VARCHAR})
+    </insert>
+
+    <select id="getNowGroup" parameterType="java.lang.String" resultType="com.lw.entity.Group">
+        select * from `group`
+        where status in ('1','2')
+        order by createTime desc
+    </select>
+
+    <select id="getGroup" parameterType="java.lang.String" resultType="com.lw.entity.Group">
+        select * from `group`
+        where 1=1
+        <if test="status!=null and status !=''">
+            and status = #{status,jdbcType=VARCHAR}
+        </if>
+        <if test="creator!=null and creator != ''">
+            and creator = #{creator,jdbcType=VARCHAR}
+        </if>
+        order by createTime desc
+    </select>
+
+    <update id="updateGroup" parameterType="java.lang.String">
+        update `group` set status = #{status,jdbcType=VARCHAR}
+        where id = #{groupId,jdbcType=VARCHAR}
+    </update>
+</mapper>
