@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lw.dao.LoginMapper">
+    <resultMap id="BaseResultMap" type="com.lw.entity.Person">
+        <id column="id" jdbcType="VARCHAR" property="id" />
+        <result column="type" jdbcType="VARCHAR" property="type" />
+        <result column="name" jdbcType="VARCHAR" property="name" />
+        <result column="gender" jdbcType="VARCHAR" property="gender" />
+        <result column="username" jdbcType="VARCHAR" property="username" />
+        <result column="idCard" jdbcType="VARCHAR" property="idCard" />
+        <result column="age" jdbcType="VARCHAR" property="age" />
+        <result column="password" jdbcType="VARCHAR" property="password" />
+        <result column="nickname" jdbcType="VARCHAR" property="nickname" />
+        <result column="pic" jdbcType="VARCHAR" property="pic" />
+        <result column="height" jdbcType="VARCHAR" property="height" />
+        <result column="weight" jdbcType="VARCHAR" property="weight" />
+        <result column="description" jdbcType="VARCHAR" property="description" />
+        <result column="verify" jdbcType="VARCHAR" property="verify" />
+        <result column="createTime" jdbcType="VARCHAR" property="createTime" />
+        <result column="groupId" jdbcType="VARCHAR" property="groupId" />
+        <result column="groupName" jdbcType="VARCHAR" property="groupName" />
+        <result column="num" jdbcType="VARCHAR" property="num" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,`type`,`name`,gender,username,idCard,age,password,nickname,pic,height,weight,
+        description,verify,createTime,groupId,groupName,num
+	</sql>
+
+    <insert id="register" parameterType="com.lw.entity.Person">
+		insert into
+		person(id,`type`,`name`,gender,username,idCard,age,password,
+		nickname,pic,height,weight,description,verify,createTime,groupId,groupName,num)
+		values (#{id,jdbcType=VARCHAR},#{type,jdbcType=VARCHAR},#{name,jdbcType=VARCHAR},#{gender,jdbcType=VARCHAR},
+		#{username,jdbcType=VARCHAR},#{idCard,jdbcType=VARCHAR},#{age,jdbcType=VARCHAR},#{password,jdbcType=VARCHAR},
+        #{nickname,jdbcType=VARCHAR},#{pic,jdbcType=VARCHAR},#{height,jdbcType=VARCHAR},#{weight,jdbcType=VARCHAR},
+        #{description,jdbcType=VARCHAR},#{verify,jdbcType=VARCHAR},#{createTime,jdbcType=VARCHAR},#{groupId,jdbcType=VARCHAR},
+        #{groupName,jdbcType=VARCHAR},#{num,jdbcType=VARCHAR})
+	</insert>
+
+    <select id="checkUser" resultType="com.lw.entity.Person">
+        select * from person where username=#{username,jdbcType=VARCHAR}
+        <if test="password != null and password != ''">
+            and password=#{password,jdbcType=VARCHAR}
+        </if>
+    </select>
+
+    <update id="updateUser" parameterType="java.lang.String">
+        update person
+        set nickname=#{nickname,jdbcType=VARCHAR},name=#{name,jdbcType=VARCHAR},
+        idCard=#{idCard,jdbcType=VARCHAR},age=#{age,jdbcType=VARCHAR},description=#{description,jdbcType=VARCHAR}
+        where username = #{username,jdbcType=VARCHAR}
+    </update>
+
+    <update id="updatePassword" parameterType="java.lang.String">
+        update person
+        set password=#{password,jdbcType=VARCHAR}
+        where username=#{username,jdbcType=VARCHAR}
+    </update>
+
+    <update id="updateToAdmin" parameterType="java.lang.String">
+        update person
+        set `type`=#{type,jdbcType=VARCHAR},
+        groupId=#{groupId,jdbcType=VARCHAR},
+        groupName = #{groupName,jdbcType=VARCHAR}
+        where username=#{username,jdbcType=VARCHAR}
+    </update>
+
+    <select id="getPersonByType" parameterType="java.lang.String" resultType="com.lw.entity.Person">
+        select * from person
+        where type = #{type,jdbcType=VARCHAR}
+        <if test="groupId != null and groupId != ''">
+            and groupId = #{groupId,jdbcType=VARCHAR}
+        </if>
+        <if test="groupId == null or groupId == ''">
+            and (groupId is null or groupId = "")
+        </if>
+    </select>
+
+    <update id="updateNum" parameterType="java.lang.String">
+        update person set num = #{num,jdbcType=VARCHAR},
+        groupName = #{groupName,jdbcType=VARCHAR},
+        groupId = #{groupId,jdbcType=VARCHAR}
+        where username = #{username,jdbcType=VARCHAR}
+    </update>
+</mapper>
