@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lw.dao.MatchMapper">
+    <resultMap id="BaseResultMap" type="com.lw.entity.Match">
+        <id column="id" jdbcType="VARCHAR" property="id" />
+        <result column="group1" jdbcType="VARCHAR" property="group1" />
+        <result column="group2" jdbcType="VARCHAR" property="group2" />
+        <result column="startTime" jdbcType="VARCHAR" property="startTime" />
+        <result column="endTime" jdbcType="VARCHAR" property="endTime" />
+    </resultMap>
+
+    <!--    <sql id="Base_Column_List">-->
+    <!--        id,`username`,`nickname`,title,content,subject,status,groupId,groupName,createTime-->
+    <!--    </sql>-->
+
+    <insert id="insertMatch" parameterType="com.lw.entity.Group">
+        insert into `match`(id,`group1`,group2,startTime,endTime)
+        values(#{id,jdbcType=VARCHAR},#{group1,jdbcType=VARCHAR},#{group2,jdbcType=VARCHAR},
+        #{startTime,jdbcType=VARCHAR},#{endTime,jdbcType=VARCHAR})
+    </insert>
+
+    <select id="getMatch" parameterType="java.lang.String"  resultType="com.lw.entity.Match">
+        select * from `match` order by startTime desc
+    </select>
+</mapper>
